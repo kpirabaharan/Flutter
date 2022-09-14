@@ -6,11 +6,11 @@ class Person {
   //   name = inputName;
   //   this.age = age;
   // }
-  Person(this.name, this.age);
+  Person({this.name, this.age});
 }
 
 void main() {
-  var Keeshi = Person('Keeshigan', 23);
+  var Keeshi = Person(name: 'Keeshigan', age:23);
   if (Keeshi.name != null) {
     print('${Keeshi.name} is ${Keeshi.age}');
 }

@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+import 'answer.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  void answerQuestion() {
-    if (questionIndex == 0) {
+  void _answerQuestion() {
+    if (_questionIndex == 0) {
       setState(() {
-        questionIndex += 1;
+        _questionIndex += 1;
       });
     } else {
       setState(() {
-        questionIndex -= 1;
+        _questionIndex -= 1;
       });
     }
-    print(questionIndex);
+    print(_questionIndex);
   }
 
   @override
@@ -44,26 +47,43 @@ class MyAppState extends State<MyApp> {
             ),
             body: Column(
               children: [
-                Text(questions.elementAt(questionIndex)),
-                ElevatedButton(
-                  child: Text(colors[0]),
-                  onPressed: answerQuestion,
-                  // () {
-                  //   print("Another was printed");
-                  //   print("Another was printed again");
-                  // },
-                  style: TextButton.styleFrom(backgroundColor: Colors.blue),
+                Question(questions.elementAt(_questionIndex)),
+                Answer(
+                  btnColor: Colors.blue,
+                  txt: "Answer 1",
+                  selectHandler: _answerQuestion,
                 ),
-                ElevatedButton(
-                  child: Text(colors[1]),
-                  onPressed: answerQuestion,
-                  style: TextButton.styleFrom(backgroundColor: Colors.red),
+                Answer(
+                  btnColor: Colors.red,
+                  txt: "Answer 2",
+                  selectHandler: _answerQuestion,
                 ),
-                ElevatedButton(
-                  child: Text(colors[2]),
-                  onPressed: answerQuestion,
-                  style: TextButton.styleFrom(backgroundColor: Colors.yellow),
-                ),
+                Answer(
+                  btnColor: Colors.yellow,
+                  txt: "Answer 3",
+                  selectHandler: _answerQuestion,
+                )
+                // ElevatedButton(
+                //   child: Text(colors[0]),
+                //   onPressed: _answerQuestion,
+                //   // () {
+                //   //   print("Another was printed");
+                //   //   print("Another was printed again");
+                //   // },
+                //   style: TextButton.styleFrom(backgroundColor: Colors.blue),
+                // ),
+                // ElevatedButton(
+                //   child: Text(colors[1]),
+                //   onPressed: _answerQuestion,
+                //   style: TextButton.styleFrom(backgroundColor: Colors.red),
+                // ),
+                // ElevatedButton(
+                //   child: Text(colors[2]),
+                //   onPressed: _answerQuestion,
+                //   style: TextButton.styleFrom(
+                //       backgroundColor: Colors.yellow,
+                //       foregroundColor: Colors.black),
+                // ),
               ],
             )));
   }
