@@ -10,7 +10,6 @@ class Question extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.fromLTRB(10, 30, 10, 20),
-      color: Colors.amber[600],
       child: Text(
         questionText,
         style: TextStyle(fontSize: 28),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import 'answer.dart';
+import 'quiz.dart';
+import 'result.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,93 +13,67 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
-
-  void _answerQuestion() {
-    if (_questionIndex < 2) {
-      setState(() {
-        _questionIndex += 1;
-      });
-    } else {
-      setState(() {
-        _questionIndex = 0;
-      });
+  final _data = const [
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Blue', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ]
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': [
+        {'text': 'Snake', 'score': 10},
+        {'text': 'Lion', 'score': 5},
+        {'text': 'Dog', 'score': 3},
+        {'text': 'Hamster', 'score': 1},
+      ]
+    },
+    {
+      'questionText': 'What\'s your favorite OS?',
+      'answers': [
+        {'text': 'iOS', 'score': 10},
+        {'text': 'Windows', 'score': 5},
+        {'text': 'Mac', 'score': 3},
+        {'text': 'Linux', 'score': 1}
+      ]
     }
-    print(_questionIndex);
+  ];
+  var _questionIndex = 0;
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
+    setState(() {
+      _questionIndex += 1;
+    });
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final data = [
-      {
-        'questionText': 'What\'s your favorite color?',
-        'answers': ['Black', 'Red', 'Blue', 'Yellow']
-      },
-      {
-        'questionText': 'What\'s your favorite animal?',
-        'answers': ['Dog', 'Cat', 'Fish', 'Horse']
-      },
-      {
-        'questionText': 'What\'s your favorite OS?',
-        'answers': ['Windows', 'Linux', 'Mac', 'iOS']
-      }
-    ];
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
               title: Text('My First App'),
-              backgroundColor: Color.fromARGB(203, 203, 105, 7),
+              // backgroundColor: Color.fromARGB(201, 7, 125, 203),
             ),
-            body: Column(
-              children: [
-                Question(data[_questionIndex]['questionText']),
-                ...(data[_questionIndex]['answers'] as List<String>)
-                    .map((answer) {
-                  return Answer(
-                      selectHandler: _answerQuestion, answerText: answer);
-                })
-                // Answer(
-                //   btnColor: Colors.blue,
-                //   txt: data[_questionIndex]['answers'][0],
-                //   selectHandler: _answerQuestion,
-                // ),
-                // Answer(
-                //   btnColor: Colors.red,
-                //   txt: "Answer 2",
-                //   selectHandler: _answerQuestion,
-                // ),
-                // Answer(
-                //   btnColor: Colors.yellow,
-                //   txt: "Answer 3",
-                //   selectHandler: _answerQuestion,
-                // )
-                // Answer(
-                //   btnColor: Colors.orange,
-                //   txt: "Answer 4",
-                //   selectHandler: _answerQuestion,
-                // )
-                // ElevatedButton(
-                //   child: Text(colors[0]),
-                //   onPressed: _answerQuestion,
-                //   // () {
-                //   //   print("Another was printed");
-                //   //   print("Another was printed again");
-                //   // },
-                //   style: TextButton.styleFrom(backgroundColor: Colors.blue),
-                // ),
-                // ElevatedButton(
-                //   child: Text(colors[1]),
-                //   onPressed: _answerQuestion,
-                //   style: TextButton.styleFrom(backgroundColor: Colors.red),
-                // ),
-                // ElevatedButton(
-                //   child: Text(colors[2]),
-                //   onPressed: _answerQuestion,
-                //   style: TextButton.styleFrom(
-                //       backgroundColor: Colors.yellow,
-                //       foregroundColor: Colors.black),
-                // ),
-              ],
-            )));
+            body: _questionIndex < _data.length
+                ? Quiz(
+                    answerQuestion: _answerQuestion,
+                    data: _data,
+                    questionIndex: _questionIndex,
+                  )
+                : Result(_totalScore, _resetQuiz)));
   }
 }
