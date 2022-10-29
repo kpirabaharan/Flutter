@@ -42,7 +42,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.fromLTRB(15, 15, 15, 10),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(
@@ -58,7 +58,6 @@ class Chart extends StatelessWidget {
                         ? 0.0
                         : (data['amount'] as double) / sumSpending),
               );
-              //return Text('${el['day']} : ${el['amount']}');
             },
           ).toList(),
         ),
