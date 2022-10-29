@@ -20,10 +20,22 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Quicksand',
           textTheme: TextTheme(
-              titleMedium: TextStyle(
-            fontFamily: 'Opensans',
-            fontSize: 18,
-          )),
+            titleMedium: TextStyle(
+              fontFamily: 'Opensans',
+              fontSize: 18,
+            ),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.indigo,
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.indigo,
+            ),
+          ),
           appBarTheme: AppBarTheme(
               titleTextStyle: TextStyle(
                   fontFamily: 'Opensans',
