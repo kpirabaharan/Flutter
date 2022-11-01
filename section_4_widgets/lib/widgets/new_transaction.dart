@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -61,19 +66,46 @@ class _NewTransactionState extends State<NewTransaction> {
             right: 10,
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(labelText: 'Title: '),
-              // onChanged: (str) => titleInput = str,
-              onSubmitted: (_) => _submitData(),
-            ),
-            TextField(
-              controller: _amountController,
-              decoration: InputDecoration(labelText: 'Amount: '),
-              keyboardType: TextInputType.number,
-              // onChanged: (str) => amountInput = str,
-              onSubmitted: (_) => _submitData(),
-            ),
+            Platform.isIOS
+                ? CupertinoTextField(
+                    style: TextStyle(fontSize: 24),
+                    controller: _titleController,
+                    placeholder: "Title",
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.extraLightBackgroundGray,
+                      border: Border.all(
+                        width: 2,
+                        color: CupertinoColors.lightBackgroundGray,
+                      ),
+                    ),
+                    onSubmitted: (_) => _submitData(),
+                  )
+                : TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(labelText: 'Title: '),
+                    onSubmitted: (_) => _submitData(),
+                  ),
+            Platform.isIOS
+                ? CupertinoTextField(
+                    style: TextStyle(fontSize: 24),
+                    controller: _amountController,
+                    placeholder: "Amount",
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.extraLightBackgroundGray,
+                      border: Border.all(
+                        width: 2,
+                        color: CupertinoColors.lightBackgroundGray,
+                      ),
+                    ),
+                    keyboardType: TextInputType.number,
+                    onSubmitted: (_) => _submitData(),
+                  )
+                : TextField(
+                    controller: _amountController,
+                    decoration: InputDecoration(labelText: 'Amount: '),
+                    keyboardType: TextInputType.number,
+                    onSubmitted: (_) => _submitData(),
+                  ),
             Container(
               height: 70,
               child: Row(
@@ -85,12 +117,19 @@ class _NewTransactionState extends State<NewTransaction> {
                           : 'Picked Date: ${DateFormat.yMd().format(_selectedDate as DateTime)}',
                     ),
                   ),
-                  TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Choose Date",
-                    ),
-                  )
+                  Platform.isIOS
+                      ? CupertinoButton(
+                          onPressed: _presentDatePicker,
+                          child: Text(
+                            "Choose Date",
+                          ),
+                        )
+                      : TextButton(
+                          onPressed: _presentDatePicker,
+                          child: Text(
+                            "Choose Date",
+                          ),
+                        )
                 ],
               ),
             ),
