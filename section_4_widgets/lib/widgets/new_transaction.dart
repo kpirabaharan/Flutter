@@ -1,10 +1,9 @@
 import 'dart:io';
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import './adaptive_button.dart';
+import './adaptive_textfield.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -66,46 +65,10 @@ class _NewTransactionState extends State<NewTransaction> {
             right: 10,
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Platform.isIOS
-                ? CupertinoTextField(
-                    style: TextStyle(fontSize: 24),
-                    controller: _titleController,
-                    placeholder: "Title",
-                    decoration: BoxDecoration(
-                      color: CupertinoColors.extraLightBackgroundGray,
-                      border: Border.all(
-                        width: 2,
-                        color: CupertinoColors.lightBackgroundGray,
-                      ),
-                    ),
-                    onSubmitted: (_) => _submitData(),
-                  )
-                : TextField(
-                    controller: _titleController,
-                    decoration: InputDecoration(labelText: 'Title: '),
-                    onSubmitted: (_) => _submitData(),
-                  ),
-            Platform.isIOS
-                ? CupertinoTextField(
-                    style: TextStyle(fontSize: 24),
-                    controller: _amountController,
-                    placeholder: "Amount",
-                    decoration: BoxDecoration(
-                      color: CupertinoColors.extraLightBackgroundGray,
-                      border: Border.all(
-                        width: 2,
-                        color: CupertinoColors.lightBackgroundGray,
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onSubmitted: (_) => _submitData(),
-                  )
-                : TextField(
-                    controller: _amountController,
-                    decoration: InputDecoration(labelText: 'Amount: '),
-                    keyboardType: TextInputType.number,
-                    onSubmitted: (_) => _submitData(),
-                  ),
+            AdaptiveTextField(
+                "Title", TextInputType.text, _titleController, _submitData),
+            AdaptiveTextField(
+                "Amount", TextInputType.number, _amountController, _submitData),
             Container(
               height: 70,
               child: Row(
@@ -117,19 +80,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           : 'Picked Date: ${DateFormat.yMd().format(_selectedDate as DateTime)}',
                     ),
                   ),
-                  Platform.isIOS
-                      ? CupertinoButton(
-                          onPressed: _presentDatePicker,
-                          child: Text(
-                            "Choose Date",
-                          ),
-                        )
-                      : TextButton(
-                          onPressed: _presentDatePicker,
-                          child: Text(
-                            "Choose Date",
-                          ),
-                        )
+                  AdaptiveTextButton('Choose Date', _presentDatePicker),
                 ],
               ),
             ),
