@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             titleMedium: TextStyle(
               fontFamily: 'Opensans',
               fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
           textButtonTheme: TextButtonThemeData(
@@ -162,7 +163,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Show Chart'),
+                  Text('Show Chart',
+                      style: Theme.of(context).textTheme.titleMedium),
                   Switch.adaptive(
                     value: _showChart,
                     onChanged: (val) {
