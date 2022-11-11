@@ -23,6 +23,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build() MyHomePageState');
     return MaterialApp(
       title: 'Personal Expenses',
       theme: ThemeData(
