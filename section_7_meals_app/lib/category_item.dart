@@ -1,8 +1,6 @@
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_complete_guide/category_meals_screen.dart';
+import './models/category.dart';
 
 class CategoryItem extends StatelessWidget {
   final String id;
@@ -12,25 +10,8 @@ class CategoryItem extends StatelessWidget {
   CategoryItem({required this.id, required this.title, required this.color});
 
   void selectCategory(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      Platform.isIOS
-          ? CupertinoPageRoute(
-              builder: (_) {
-                return CategoryMealsScreen(
-                  categoryID: id,
-                  categoryTitle: title,
-                );
-              },
-            )
-          : MaterialPageRoute(
-              builder: (_) {
-                return CategoryMealsScreen(
-                  categoryID: id,
-                  categoryTitle: title,
-                );
-              },
-            ),
-    );
+    Navigator.of(ctx).pushNamed('/category-meals',
+        arguments: Category(id: id, title: title));
   }
 
   @override
