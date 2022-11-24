@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:flutter_complete_guide/models/meal.dart';
 
 import '../models/meal.dart';
 
@@ -50,7 +49,35 @@ class MealItem extends StatelessWidget {
                   ),
                 )
               ],
-            )
+            ),
+            Padding(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.schedule),
+                        SizedBox(width: 6),
+                        Text('${item.duration} min'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.work),
+                        SizedBox(width: 6),
+                        Text(item.complexity.name),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.money),
+                        SizedBox(width: 6),
+                        Text(item.affordability.name),
+                      ],
+                    )
+                  ],
+                ))
           ],
         ),
       ),
