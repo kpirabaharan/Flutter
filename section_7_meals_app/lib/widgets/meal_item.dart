@@ -5,11 +5,20 @@ import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
   final Meal item;
+  final Function removeItem;
 
-  MealItem(this.item);
+  MealItem({required this.item, required this.removeItem});
 
   void selectMeal(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(MealDetailScreen.routeName, arguments: item);
+    Navigator.of(ctx)
+        .pushNamed(MealDetailScreen.routeName, arguments: item)
+        .then(
+      (result) {
+        if (result != null) {
+          removeItem(result);
+        }
+      },
+    );
   }
 
   @override
