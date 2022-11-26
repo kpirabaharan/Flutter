@@ -22,6 +22,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void initState() {
+    super.initState();
     _pages = [
       {
         'page': CategoriesScreen(),
@@ -32,7 +33,21 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Favorites',
       }
     ];
-    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(TabsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _pages = [
+      {
+        'page': CategoriesScreen(),
+        'title': 'Categories',
+      },
+      {
+        'page': FavoritesScreen(widget.favoriteMeals),
+        'title': 'Favorites',
+      }
+    ];
   }
 
   void _selectPage(int index) {

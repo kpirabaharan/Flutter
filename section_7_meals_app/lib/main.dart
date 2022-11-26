@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         _favoriteMeals.indexWhere((meal) => meal.id == mealId);
     if (existingIndex >= 0) {
       setState(() {
-        _favoriteMeals.remove(existingIndex);
+        _favoriteMeals.removeAt(existingIndex);
       });
     } else {
       setState(() {
@@ -73,8 +73,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
-            .copyWith(secondary: Colors.orangeAccent),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
+            .copyWith(secondary: Colors.purple),
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
