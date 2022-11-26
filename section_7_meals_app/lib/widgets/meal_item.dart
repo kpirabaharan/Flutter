@@ -5,9 +5,8 @@ import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
   final Meal item;
-  final Function removeItem;
 
-  MealItem({required this.item, required this.removeItem});
+  MealItem(this.item);
 
   void selectMeal(BuildContext ctx) {
     Navigator.of(ctx)
@@ -15,7 +14,7 @@ class MealItem extends StatelessWidget {
         .then(
       (result) {
         if (result != null) {
-          removeItem(result);
+          // removeItem(result);
         }
       },
     );
