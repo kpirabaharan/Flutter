@@ -55,11 +55,14 @@ class MealDetailScreen extends StatelessWidget {
           buildContainer(
             ListView.builder(
               itemBuilder: (ctx, index) => Card(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.secondary.withAlpha(50),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(meal.ingredients[index]),
+                  child: Text(
+                    meal.ingredients[index],
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
               itemCount: meal.ingredients.length,
@@ -72,6 +75,7 @@ class MealDetailScreen extends StatelessWidget {
                 ListTile(
                   leading: CircleAvatar(
                     child: Text('# ${(index + 1)}'),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                   title: Text(meal.procedure[index]),
                 ),
