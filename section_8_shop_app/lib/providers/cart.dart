@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/date_symbols.dart';
 
 class CartItem {
   final String id;
@@ -58,6 +59,24 @@ class Cart with ChangeNotifier {
           price: price,
         ),
       );
+    }
+    notifyListeners();
+  }
+
+  void removeSingleItem(String productId) {
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    if (_items[productId]!.quantity > 1) {
+      _items.update(
+          productId,
+          (existing) => CartItem(
+              id: existing.id,
+              title: existing.title,
+              quantity: existing.quantity - 1,
+              price: existing.price));
+    } else {
+      _items.remove(productId);
     }
     notifyListeners();
   }
