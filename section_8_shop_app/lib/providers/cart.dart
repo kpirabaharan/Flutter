@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:intl/date_symbols.dart';
 
 class CartItem {
   final String id;
