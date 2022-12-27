@@ -11,10 +11,22 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        title: Text('New Product'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Form(
+          child: ListView(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Title'),
+                textInputAction: TextInputAction.next,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
