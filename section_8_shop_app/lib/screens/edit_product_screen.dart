@@ -11,11 +11,13 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _imageURLController = TextEditingController();
 
   @override
   void dispose() {
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
+    _imageURLController.dispose();
     super.dispose();
   }
 
@@ -49,6 +51,46 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 8, right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    child: Container(
+                      child: _imageURLController.text.isEmpty
+                          ? Text(
+                              'Enter a URL',
+                              textAlign: TextAlign.center,
+                            )
+                          : FittedBox(
+                              child: Image.network(
+                                _imageURLController.text,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageURLController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                    ),
+                  )
+                ],
               ),
             ],
           ),
