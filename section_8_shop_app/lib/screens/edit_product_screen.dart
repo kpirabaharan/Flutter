@@ -28,11 +28,52 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
-    _form.currentState?.save();
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
     print(_newProduct.title);
     print(_newProduct.description);
     print(_newProduct.price);
     print(_newProduct.imageUrl);
+  }
+
+  String? errorCheckTitle(String value) {
+    if (value.isEmpty) return 'Please provide a title.';
+
+    return null;
+  }
+
+  String? errorCheckDescription(String value) {
+    if (value.isEmpty) return 'Please provide a description.';
+
+    if (value.length < 10)
+      return 'Please provide a description greater than 10 characters.';
+
+    return null;
+  }
+
+  String? errorCheckPrice(String value) {
+    if (value.isEmpty) return 'Please enter a price.';
+
+    if (double.tryParse(value) == null) return 'Please enter a valid number.';
+
+    if (double.parse(value) <= 0)
+      return 'Please enter a nuymber greater than zero.';
+
+    return null;
+  }
+
+  String? errorCheckURL(String value) {
+    if (value.isEmpty) return 'Please enter an image URL.';
+
+    if ((!value.startsWith('http') && !value.startsWith('https')) ||
+        (!value.endsWith('jpg') &&
+            !value.endsWith('jpeg') &&
+            !value.endsWith('png'))) return 'Please enter a valid image URL.';
+
+    return null;
   }
 
   @override
@@ -68,11 +109,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       price: _newProduct.price,
                       imageUrl: _newProduct.imageUrl);
                 },
+                validator: (value) {
+                  return errorCheckTitle(value as String);
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 focusNode: _priceFocusNode,
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_descriptionFocusNode),
@@ -84,6 +128,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: double.parse(value as String),
                     imageUrl: _newProduct.imageUrl,
                   );
+                },
+                validator: (value) {
+                  return errorCheckPrice(value as String);
                 },
               ),
               TextFormField(
@@ -99,6 +146,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _newProduct.price,
                     imageUrl: _newProduct.imageUrl,
                   );
+                },
+                validator: (value) {
+                  return errorCheckDescription(value as String);
                 },
               ),
               Row(
@@ -136,6 +186,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       controller: _imageURLController,
                       onChanged: (value) {
                         setState(() {});
+                      },
+                      validator: (value) {
+                        return errorCheckURL(value as String);
                       },
                       onSaved: (value) {
                         _newProduct = Product(
