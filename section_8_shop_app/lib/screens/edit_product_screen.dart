@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -16,7 +18,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _descriptionFocusNode = FocusNode();
   final _imageURLController = TextEditingController();
 
-  var _newProduct =
+  var _isInit = true;
+  var _initValues = {
+    'id': '',
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
+
+  var _editedProduct =
       Product(id: '', title: '', description: '', price: 0, imageUrl: '');
 
   @override
@@ -27,16 +38,49 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final _prodToEdit =
+          ModalRoute.of(context)!.settings.arguments as Product?;
+      if (_prodToEdit != null) {
+        _initValues = {
+          'id': _prodToEdit.id,
+          'title': _prodToEdit.title,
+          'description': _prodToEdit.description,
+          'price': _prodToEdit.price.toString(),
+          'imageUrl': _prodToEdit.imageUrl,
+        };
+        _imageURLController.text = _prodToEdit.imageUrl;
+        _editedProduct = Product(
+          id: _prodToEdit.id,
+          title: _prodToEdit.title,
+          description: _prodToEdit.description,
+          price: _prodToEdit.price,
+          imageUrl: _prodToEdit.imageUrl,
+          isFavorite: _prodToEdit.isFavorite,
+        );
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   void _saveForm() {
     final isValid = _form.currentState!.validate();
+    print(_editedProduct.id);
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
-    print(_newProduct.title);
-    print(_newProduct.description);
-    print(_newProduct.price);
-    print(_newProduct.imageUrl);
+    if (_editedProduct.id == '') {
+      print("run1");
+      Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
+    }
+    Navigator.of(context).pop();
   }
 
   String? errorCheckTitle(String value) {
@@ -97,23 +141,27 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _initValues['title'],
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_priceFocusNode),
                 onSaved: (value) {
-                  _newProduct = Product(
-                      id: _newProduct.id,
-                      title: value as String,
-                      description: _newProduct.description,
-                      price: _newProduct.price,
-                      imageUrl: _newProduct.imageUrl);
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: value as String,
+                    description: _editedProduct.description,
+                    price: _editedProduct.price,
+                    imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
+                  );
                 },
                 validator: (value) {
                   return errorCheckTitle(value as String);
                 },
               ),
               TextFormField(
+                initialValue: _initValues['price'],
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -121,12 +169,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_descriptionFocusNode),
                 onSaved: (value) {
-                  _newProduct = Product(
-                    id: _newProduct.id,
-                    title: _newProduct.title,
-                    description: _newProduct.description,
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: _editedProduct.title,
+                    description: _editedProduct.description,
                     price: double.parse(value as String),
-                    imageUrl: _newProduct.imageUrl,
+                    imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
                 validator: (value) {
@@ -134,17 +183,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValues['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
                 onSaved: (value) {
-                  _newProduct = Product(
-                    id: _newProduct.id,
-                    title: _newProduct.title,
+                  _editedProduct = Product(
+                    id: _editedProduct.id,
+                    title: _editedProduct.title,
                     description: value as String,
-                    price: _newProduct.price,
-                    imageUrl: _newProduct.imageUrl,
+                    price: _editedProduct.price,
+                    imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
                 validator: (value) {
@@ -191,12 +242,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return errorCheckURL(value as String);
                       },
                       onSaved: (value) {
-                        _newProduct = Product(
-                          id: _newProduct.id,
-                          title: _newProduct.title,
-                          description: _newProduct.description,
-                          price: _newProduct.price,
+                        _editedProduct = Product(
+                          id: _editedProduct.id,
+                          title: _editedProduct.title,
+                          description: _editedProduct.description,
+                          price: _editedProduct.price,
                           imageUrl: value as String,
+                          isFavorite: _editedProduct.isFavorite,
                         );
                       },
                       onFieldSubmitted: (_) {
