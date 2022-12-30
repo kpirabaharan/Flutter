@@ -82,4 +82,9 @@ class Products with ChangeNotifier {
     if (prodIndex >= 0) _items[prodIndex] = newProduct;
     notifyListeners();
   }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
 }
