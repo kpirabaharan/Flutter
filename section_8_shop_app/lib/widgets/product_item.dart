@@ -11,6 +11,21 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
 
+    Future<void> toggleFav(BuildContext context) async {
+      try {
+        await product.toggleFavorite();
+      } catch (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error Toggling Favorite',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -37,7 +52,7 @@ class ProductItem extends StatelessWidget {
               icon: Icon(
                   product.isFavorite ? Icons.star : Icons.star_border_outlined),
               color: Theme.of(context).colorScheme.secondary,
-              onPressed: product.toggleFavorite,
+              onPressed: () => toggleFav(context),
             ),
           ),
           trailing: IconButton(
