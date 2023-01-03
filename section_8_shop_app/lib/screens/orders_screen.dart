@@ -13,42 +13,44 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  var _isInit = true;
-  var _isLoading = false;
+  late Future _ordersFuture;
+
+  Future _obtainOrdersFuture() {
+    return Provider.of<Orders>(context, listen: false).fetchOrders();
+  }
 
   @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Orders>(context, listen: false).fetchOrders().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-
-    _isInit = false;
-
-    super.didChangeDependencies();
+  void initState() {
+    _ordersFuture = _obtainOrdersFuture();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final orderData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: orderData.orders.length,
-              itemBuilder: (ctx, i) => OrderScreenItem(orderData.orders[i]),
-            ),
+      body: FutureBuilder(
+        future: _ordersFuture,
+        builder: ((ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.error != null) {
+              // Do Error Handling Here
+              return Center(child: Text('An Error Occured!'));
+            } else {
+              return Consumer<Orders>(
+                builder: (ctx, orderData, child) => ListView.builder(
+                  itemCount: orderData.orders.length,
+                  itemBuilder: (ctx, i) => OrderScreenItem(orderData.orders[i]),
+                ),
+              );
+            }
+          }
+        }),
+      ),
       drawer: AppDrawer(),
     );
   }
