@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
+import '../providers/auth.dart';
 import '../providers/product.dart';
 import '../providers/cart.dart';
 
@@ -10,10 +11,11 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     Future<void> toggleFav(BuildContext context) async {
       try {
-        await product.toggleFavorite();
+        await product.toggleFavorite(authData.token as String);
       } catch (_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
