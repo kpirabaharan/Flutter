@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/http_exception.dart';
+import '../keys/api_key.dart' as key;
 
 class Auth with ChangeNotifier {
   late String _token;
@@ -42,11 +43,11 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(String email, String password) {
     return _authenticate(email, password,
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key.key}');
   }
 
   Future<void> login(String email, String password) {
     return _authenticate(email, password,
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key.key}');
   }
 }
