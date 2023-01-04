@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/http_exception.dart';
+
 class Auth with ChangeNotifier {
   late String _token;
   late DateTime _expiryDate;
@@ -27,7 +29,12 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      print(json.decode(response.body));
+      final responseData = json.decode(response.body);
+      print(responseData);
+
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
     } catch (error) {
       throw error;
     }
