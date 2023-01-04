@@ -15,8 +15,10 @@ class ProductItem extends StatelessWidget {
 
     Future<void> toggleFav(BuildContext context) async {
       try {
-        await product.toggleFavorite(authData.token as String);
-      } catch (_) {
+        await product.toggleFavorite(
+            authData.token as String, authData.userId as String);
+      } catch (error) {
+        print(error);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
