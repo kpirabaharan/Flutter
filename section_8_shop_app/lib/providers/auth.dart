@@ -10,37 +10,36 @@ class Auth with ChangeNotifier {
   late DateTime _expiryDate;
   late String _userId;
 
-  Future<void> signup(String email, String password) async {
-    final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
-
-    final response = await http.post(
-      url,
-      body: json.encode(
-        {
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        },
-      ),
-    );
-    print(json.decode(response.body));
+  Future<void> _authenticate(
+    String email,
+    String password,
+    String authUrl,
+  ) async {
+    final url = Uri.parse(authUrl);
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          },
+        ),
+      );
+      print(json.decode(response.body));
+    } catch (error) {
+      throw error;
+    }
   }
 
-  Future<void> login(String email, String password) async {
-    final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
+  Future<void> signup(String email, String password) {
+    return _authenticate(email, password,
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
+  }
 
-    final response = await http.post(
-      url,
-      body: json.encode(
-        {
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        },
-      ),
-    );
-    print(json.decode(response.body));
+  Future<void> login(String email, String password) {
+    return _authenticate(email, password,
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBFkT8wRXFNw7w6EmNwiPvzcmYCq8btEX8');
   }
 }
