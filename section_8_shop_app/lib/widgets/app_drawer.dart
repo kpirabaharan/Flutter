@@ -63,6 +63,7 @@ class AppDrawer extends StatelessWidget {
             Icons.exit_to_app,
             () {
               Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/');
               Provider.of<Auth>(context, listen: false).logout();
             },
           ),
