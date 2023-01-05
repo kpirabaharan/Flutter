@@ -107,28 +107,32 @@ class _AuthCardState extends State<AuthCard>
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  // late AnimationController _controller;
+  late AnimationController _controller;
   // late Animation<Size> _heightAnimation;
+  late Animation<double> _opacityAnimation;
 
-  // @override
-  // void initState() {
-  //   _controller = AnimationController(
-  //     vsync: this,
-  //     duration: Duration(milliseconds: 300),
-  //   );
-  //   _heightAnimation = Tween<Size>(
-  //     begin: Size(double.infinity, 260),
-  //     end: Size(double.infinity, 320),
-  //   ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
-  //   // _heightAnimation.addListener(() => setState(() {}));
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    //   _heightAnimation = Tween<Size>(
+    //     begin: Size(double.infinity, 260),
+    //     end: Size(double.infinity, 320),
+    //   ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+    //   // _heightAnimation.addListener(() => setState(() {}));
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+    super.initState();
+  }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -195,12 +199,12 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authMode = AuthMode.signup;
       });
-      // _controller.forward();
+      _controller.forward();
     } else {
       setState(() {
         _authMode = AuthMode.login;
       });
-      // _controller.reverse();
+      _controller.reverse();
     }
   }
 
@@ -255,19 +259,22 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 if (_authMode == AuthMode.signup)
-                  TextFormField(
-                    enabled: _authMode == AuthMode.signup,
-                    decoration:
-                        const InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                    validator: _authMode == AuthMode.signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
+                  FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: TextFormField(
+                      enabled: _authMode == AuthMode.signup,
+                      decoration:
+                          const InputDecoration(labelText: 'Confirm Password'),
+                      obscureText: true,
+                      validator: _authMode == AuthMode.signup
+                          ? (value) {
+                              if (value != _passwordController.text) {
+                                return 'Passwords do not match!';
+                              }
+                              return null;
                             }
-                            return null;
-                          }
-                        : null,
+                          : null,
+                    ),
                   ),
                 const SizedBox(
                   height: 20,
