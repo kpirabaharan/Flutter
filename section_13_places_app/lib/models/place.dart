@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 class Location {
   final double latitude;
   final double longitude;
