@@ -29,6 +29,11 @@
 	<string>Access to Gallery</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Access to Camera</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Need Location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Need Location</string>
 	
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
