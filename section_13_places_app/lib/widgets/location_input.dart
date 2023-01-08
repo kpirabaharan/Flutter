@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
 import '../helpers/location_helper.dart';
+import '../screens/map_screen.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key});
@@ -19,12 +20,24 @@ class _LocationInputState extends State<LocationInput> {
       latitude: locData.latitude as double,
       longitude: locData.longitude as double,
     );
-    print(locData.latitude);
-    print(locData.longitude);
-    
+
     setState(() {
       _previewImageUrl = mapUrl;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => const MapsScreen(
+          isSelecting: true,
+        ),
+      ),
+    );
+    if (selectedLocation == null) {
+      return;
+    }
   }
 
   @override
@@ -32,7 +45,7 @@ class _LocationInputState extends State<LocationInput> {
     return Column(children: [
       Container(
         alignment: Alignment.center,
-        height: 170,
+        height: 300,
         width: double.infinity,
         decoration: BoxDecoration(
           border: Border.all(width: 1, color: Colors.green),
@@ -56,7 +69,7 @@ class _LocationInputState extends State<LocationInput> {
           TextButton.icon(
             icon: const Icon(Icons.map),
             label: const Text('Select on Map'),
-            onPressed: () {},
+            onPressed: _selectOnMap,
           ),
         ],
       )

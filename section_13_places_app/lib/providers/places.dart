@@ -34,8 +34,6 @@ class Places with ChangeNotifier {
   Future<void> fetchAndSetPlaces() async {
     final dataList = await DBHelper.getData('user_places');
     _items = dataList.map((item) {
-      print(item['title']);
-      print(item['image']);
       return Place(
         id: item['id'],
         title: item['title'],

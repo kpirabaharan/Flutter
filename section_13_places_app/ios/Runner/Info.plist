@@ -34,6 +34,9 @@
 	<string>Need Location</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Need Location</string>
+
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 	
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
