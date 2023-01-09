@@ -8,8 +8,8 @@ import 'package:path_provider/path_provider.dart' as syspath;
 class ImageInput extends StatefulWidget {
   final Function onSelectImage;
 
-  // ignore: use_key_in_widget_constructors
-  const ImageInput(this.onSelectImage);
+  // ignore: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+  ImageInput(this.onSelectImage);
 
   @override
   State<ImageInput> createState() => _ImageInputState();
