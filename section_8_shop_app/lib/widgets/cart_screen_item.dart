@@ -38,7 +38,7 @@ class CartScreenItem extends StatelessWidget {
         );
       },
       background: Container(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         child: Icon(Icons.delete, color: Colors.white, size: 40),
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 20),

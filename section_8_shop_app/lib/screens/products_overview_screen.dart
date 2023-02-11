@@ -5,7 +5,7 @@ import './cart_screen.dart';
 import '../providers/cart.dart';
 import '../providers/products.dart';
 import '../widgets/products_grid.dart';
-import '../widgets/badge.dart';
+import '../widgets/MyBadge.dart';
 import '../widgets/app_drawer.dart';
 
 enum FilterOptions {
@@ -68,7 +68,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             icon: Icon(Icons.more_vert),
           ),
           Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(
+            builder: (_, cart, ch) =>
+                // Badge.count(
+                //   count: cart.itemCount,
+                //   child: ch,
+                // ),
+                MyBadge(
               child: ch as Widget,
               value: cart.itemCount.toString(),
               color: Theme.of(context).colorScheme.secondary,

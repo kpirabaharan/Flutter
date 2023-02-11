@@ -13,7 +13,7 @@ class AppDrawer extends StatelessWidget {
       leading: Icon(iconData),
       title: Text(
         title,
-        style: Theme.of(ctx).textTheme.headline6,
+        style: Theme.of(ctx).textTheme.titleLarge,
       ),
       onTap: onPress,
     );

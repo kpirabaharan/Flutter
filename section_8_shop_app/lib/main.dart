@@ -53,11 +53,9 @@ class MyApp extends StatelessWidget {
                   .copyWith(secondary: Colors.deepOrange),
               fontFamily: 'Lato',
               textTheme: TextTheme(
-                bodyText1: TextStyle(color: Colors.white),
-                headline6: TextStyle(
-                    color: Colors.black,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),
+                bodyLarge: TextStyle(color: Colors.white),
+                titleLarge:
+                    TextStyle(color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),
               ),
               // Make default screen transition theme
               pageTransitionsTheme: PageTransitionsTheme(
