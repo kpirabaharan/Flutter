@@ -51,8 +51,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _toggleFavorite(String mealId) {
-    final existingIndex =
-        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    final existingIndex = _favoriteMeals.indexWhere((meal) => meal.id == mealId);
     if (existingIndex >= 0) {
       setState(() {
         _favoriteMeals.removeAt(existingIndex);
@@ -73,26 +72,22 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
-            .copyWith(secondary: Colors.purple),
+        colorScheme:
+            ColorScheme.fromSwatch(primarySwatch: Colors.orange).copyWith(secondary: Colors.purple),
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
               bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
               bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
               headline6: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'RobotoCondensed',
-                  fontWeight: FontWeight.bold),
+                  fontSize: 20, fontFamily: 'RobotoCondensed', fontWeight: FontWeight.bold),
             ),
       ),
       initialRoute: TabsScreen.routeName,
       routes: {
         TabsScreen.routeName: (ctx) => TabsScreen(_favoriteMeals),
-        CategoryMealsScreen.routeName: (ctx) =>
-            CategoryMealsScreen(_availableMeals),
-        MealDetailScreen.routeName: (ctx) =>
-            MealDetailScreen(_toggleFavorite, _isMealFavorite),
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(_availableMeals),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(_toggleFavorite, _isMealFavorite),
         FiltersScreen.routeName: (ctx) => FiltersScreen(_filters, _setFilters),
       },
       // onGenerateRoute: (settings) {

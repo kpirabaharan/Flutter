@@ -19,9 +19,7 @@ class Auth with ChangeNotifier {
   }
 
   String? get token {
-    if (_expiryDate != null &&
-        _expiryDate!.isAfter(DateTime.now()) &&
-        _token != null) {
+    if (_expiryDate != null && _expiryDate!.isAfter(DateTime.now()) && _token != null) {
       return _token as String;
     }
     return null;
@@ -80,11 +78,10 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('userData')) {
       return false;
     }
-    final extractedUserData = json.decode(prefs.getString('userData') as String)
-        as Map<String, dynamic>;
+    final extractedUserData =
+        json.decode(prefs.getString('userData') as String) as Map<String, dynamic>;
 
-    final expiryDate =
-        DateTime.parse(extractedUserData['expiryDate'] as String);
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate'] as String);
 
     if (expiryDate.isBefore(DateTime.now())) {
       return false;

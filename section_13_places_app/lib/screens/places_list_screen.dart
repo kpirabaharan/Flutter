@@ -14,16 +14,14 @@ class PlacesListScreen extends StatelessWidget {
         title: const Text('Your Places'),
         actions: [
           IconButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(AddPlaceScreen.routeName),
+            onPressed: () => Navigator.of(context).pushNamed(AddPlaceScreen.routeName),
             icon: const Icon(Icons.add),
           )
         ],
       ),
       body: FutureBuilder(
         future: Provider.of<Places>(context, listen: false).fetchAndSetPlaces(),
-        builder: (context, snapshot) => snapshot.connectionState ==
-                ConnectionState.waiting
+        builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
             ? const Center(child: CircularProgressIndicator())
             : Consumer<Places>(
                 builder: (ctx, places, ch) => places.items.isEmpty

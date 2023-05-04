@@ -27,6 +27,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Orders Screen');
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
@@ -34,6 +35,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       body: FutureBuilder(
         future: _ordersFuture,
         builder: ((ctx, snapshot) {
+          print('Test');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else {

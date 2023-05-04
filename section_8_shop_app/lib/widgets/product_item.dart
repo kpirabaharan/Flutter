@@ -15,8 +15,7 @@ class ProductItem extends StatelessWidget {
 
     Future<void> toggleFav(BuildContext context) async {
       try {
-        await product.toggleFavorite(
-            authData.token as String, authData.userId as String);
+        await product.toggleFavorite(authData.token as String, authData.userId as String);
       } catch (error) {
         print(error);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -30,6 +29,7 @@ class ProductItem extends StatelessWidget {
       }
     }
 
+    print('Product Item');
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -57,8 +57,7 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
-              icon: Icon(
-                  product.isFavorite ? Icons.star : Icons.star_border_outlined),
+              icon: Icon(product.isFavorite ? Icons.star : Icons.star_border_outlined),
               color: Theme.of(context).colorScheme.secondary,
               onPressed: () => toggleFav(context),
             ),

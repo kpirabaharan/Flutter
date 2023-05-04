@@ -9,10 +9,10 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Product Detail Screen');
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     // If data is only retrieved once we need to set listen to false
-    final loadedProduct =
-        Provider.of<Products>(context, listen: false).findById(productId);
+    final loadedProduct = Provider.of<Products>(context, listen: false).findById(productId);
 
     return Scaffold(
       // appBar: AppBar(

@@ -28,6 +28,7 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('User Products Screen');
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Products'),
@@ -45,28 +46,27 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
       drawer: AppDrawer(),
       body: FutureBuilder(
         future: _productsFuture,
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () => _refreshProducts(),
-                    child: Consumer<Products>(
-                      builder: (ctx, productsData, _) => Padding(
-                        padding: EdgeInsets.all(8),
-                        child: ListView.builder(
-                          itemCount: productsData.items.length,
-                          itemBuilder: (_, index) => Column(
-                            children: [
-                              UserProductItem(productsData.items[index]),
-                              Divider(),
-                            ],
-                          ),
-                        ),
+        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () => _refreshProducts(),
+                child: Consumer<Products>(
+                  builder: (ctx, productsData, _) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: ListView.builder(
+                      itemCount: productsData.items.length,
+                      itemBuilder: (_, index) => Column(
+                        children: [
+                          UserProductItem(productsData.items[index]),
+                          Divider(),
+                        ],
                       ),
                     ),
                   ),
+                ),
+              ),
       ),
     );
   }

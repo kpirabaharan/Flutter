@@ -15,6 +15,7 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Auth Screen');
     final deviceSize = MediaQuery.of(context).size;
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
@@ -46,10 +47,8 @@ class AuthScreen extends StatelessWidget {
                   Flexible(
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 20.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+                      transform: Matrix4.rotationZ(-8 * pi / 180)..translate(-10.0),
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -96,8 +95,7 @@ class AuthCard extends StatefulWidget {
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard>
-    with SingleTickerProviderStateMixin {
+class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.login;
   final Map<String, String> _authData = {
@@ -164,11 +162,11 @@ class _AuthCardState extends State<AuthCard>
 
     try {
       if (_authMode == AuthMode.login) {
-        await Provider.of<Auth>(context, listen: false).login(
-            _authData['email'] as String, _authData['password'] as String);
+        await Provider.of<Auth>(context, listen: false)
+            .login(_authData['email'] as String, _authData['password'] as String);
       } else {
-        await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'] as String, _authData['password'] as String);
+        await Provider.of<Auth>(context, listen: false)
+            .signup(_authData['email'] as String, _authData['password'] as String);
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
@@ -185,7 +183,7 @@ class _AuthCardState extends State<AuthCard>
       }
       _showErrorDialog(errorMessage);
     } catch (error) {
-      const errorMessage = 'Could not authentica you. Please try again later.';
+      const errorMessage = 'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
     }
 
@@ -206,6 +204,7 @@ class _AuthCardState extends State<AuthCard>
       });
       _controller.reverse();
     }
+    print(_authMode);
   }
 
   @override
@@ -221,8 +220,7 @@ class _AuthCardState extends State<AuthCard>
         curve: Curves.easeIn,
         // height: _heightAnimation.value.height,
         height: _authMode == AuthMode.signup ? 320 : 260,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
+        constraints: BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -263,8 +261,7 @@ class _AuthCardState extends State<AuthCard>
                     opacity: _opacityAnimation,
                     child: TextFormField(
                       enabled: _authMode == AuthMode.signup,
-                      decoration:
-                          const InputDecoration(labelText: 'Confirm Password'),
+                      decoration: const InputDecoration(labelText: 'Confirm Password'),
                       obscureText: true,
                       validator: _authMode == AuthMode.signup
                           ? (value) {
@@ -283,27 +280,22 @@ class _AuthCardState extends State<AuthCard>
                   const CircularProgressIndicator()
                 else
                   ElevatedButton(
-                    child:
-                        Text(_authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
+                    child: Text(_authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 8.0),
-                      foregroundColor:
-                          Theme.of(context).colorScheme.inversePrimary,
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                      foregroundColor: Theme.of(context).colorScheme.inversePrimary,
                       // primary: Theme.of(context).primaryTextTheme.button.color,
                     ),
                   ),
                 TextButton(
-                  child: Text(
-                      '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                  child: Text('${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     foregroundColor: Theme.of(context).colorScheme.primary,
                   ),

@@ -27,16 +27,14 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts([bool filterByUser = false]) async {
-    final filterString =
-        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     ;
     var url = Uri.parse(
         'https://flutter-shop-http-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString');
 
     try {
       final response = await http.get(url);
-      dynamic extractedData =
-          json.decode(response.body) as Map<String, dynamic>;
+      dynamic extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (extractedData == null) return;
 
@@ -49,14 +47,14 @@ class Products with ChangeNotifier {
 
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
+        print(prodId);
         loadedProducts.add(Product(
           id: prodId,
           title: prodData['title'],
           description: prodData['description'],
           price: prodData['price'],
           imageUrl: prodData['imageUrl'],
-          isFavorite:
-              favoriteData == null ? false : favoriteData[prodId] ?? false,
+          isFavorite: favoriteData == null ? false : favoriteData[prodId] ?? false,
         ));
       });
       _items = loadedProducts;

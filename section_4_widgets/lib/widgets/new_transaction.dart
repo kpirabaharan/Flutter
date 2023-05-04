@@ -63,10 +63,8 @@ class _NewTransactionState extends State<NewTransaction> {
             right: 10,
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            AdaptiveTextField(
-                "Title", TextInputType.text, _titleController, _submitData),
-            AdaptiveTextField(
-                "Amount", TextInputType.number, _amountController, _submitData),
+            AdaptiveTextField("Title", TextInputType.text, _titleController, _submitData),
+            AdaptiveTextField("Amount", TextInputType.number, _amountController, _submitData),
             Container(
               height: 70,
               child: Row(
