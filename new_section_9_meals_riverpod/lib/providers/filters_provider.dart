@@ -30,3 +30,4 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
 
 final filtersProvider =
     StateNotifierProvider<FiltersNotifier, Map<Filter, bool>>((ref) => FiltersNotifier());
+
