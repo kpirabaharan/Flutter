@@ -13,13 +13,11 @@ final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-void main() {
-  runApp(
-    const ProviderScope(
-      child: App(),
-    ),
-  );
-}
+void main() => runApp(
+      const ProviderScope(
+        child: App(),
+      ),
+    );
 
 class App extends StatelessWidget {
   const App({super.key});
