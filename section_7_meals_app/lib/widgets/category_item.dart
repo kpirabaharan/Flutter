@@ -11,8 +11,8 @@ class CategoryItem extends StatelessWidget {
   CategoryItem({required this.id, required this.title, required this.color});
 
   void selectCategory(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(CategoryMealsScreen.routeName,
-        arguments: Category(id: id, title: title));
+    Navigator.of(ctx)
+        .pushNamed(CategoryMealsScreen.routeName, arguments: Category(id: id, title: title));
   }
 
   @override
@@ -24,7 +24,7 @@ class CategoryItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15),
         child: Center(
-          child: Text(title, style: Theme.of(context).textTheme.headline6),
+          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(

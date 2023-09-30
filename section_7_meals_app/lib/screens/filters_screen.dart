@@ -29,8 +29,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
     super.initState();
   }
 
-  Widget _buildSwitchTile(String titleText, String description,
-      bool currentValue, Function(bool) updateValue) {
+  Widget _buildSwitchTile(
+      String titleText, String description, bool currentValue, Function(bool) updateValue) {
     return SwitchListTile(
       title: Text(titleText),
       subtitle: Text(description),
@@ -65,34 +65,31 @@ class _FiltersScreenState extends State<FiltersScreen> {
           padding: EdgeInsets.all(20),
           child: Text(
             'Adjust your meal selection.',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         Expanded(
           child: ListView(
             children: [
-              _buildSwitchTile(
-                  'Gluten Free', 'Only include gluten-free meals.', _glutenFree,
+              _buildSwitchTile('Gluten Free', 'Only include gluten-free meals.', _glutenFree,
                   (newValue) {
                 setState(() {
                   _glutenFree = newValue;
                 });
               }),
-              _buildSwitchTile(
-                  'Vegetarian', 'Only include vegetarian meals.', _vegetarian,
+              _buildSwitchTile('Vegetarian', 'Only include vegetarian meals.', _vegetarian,
                   (newValue) {
                 setState(() {
                   _vegetarian = newValue;
                 });
               }),
-              _buildSwitchTile('Vegan', 'Only include vegan meals.', _vegan,
-                  (newValue) {
+              _buildSwitchTile('Vegan', 'Only include vegan meals.', _vegan, (newValue) {
                 setState(() {
                   _vegan = newValue;
                 });
               }),
-              _buildSwitchTile('Lactose Free',
-                  'Only include lactose-free meals.', _lactoseFree, (newValue) {
+              _buildSwitchTile('Lactose Free', 'Only include lactose-free meals.', _lactoseFree,
+                  (newValue) {
                 setState(() {
                   _lactoseFree = newValue;
                 });

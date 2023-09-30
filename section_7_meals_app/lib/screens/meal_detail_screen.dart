@@ -15,7 +15,7 @@ class MealDetailScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }
@@ -57,8 +57,7 @@ class MealDetailScreen extends StatelessWidget {
               itemBuilder: (ctx, index) => Card(
                 color: Theme.of(context).colorScheme.secondary.withAlpha(50),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: Text(
                     meal.ingredients[index],
                     style: TextStyle(color: Colors.black),

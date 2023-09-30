@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.indigo,
+            errorColor: Colors.blueGrey,
           ).copyWith(
             secondary: Colors.redAccent,
           ),
-          errorColor: Colors.blueGrey,
           fontFamily: 'Quicksand',
           textTheme: TextTheme(
             titleMedium: TextStyle(
@@ -43,8 +43,7 @@ class MyApp extends StatelessWidget {
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.indigo,
-                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                foregroundColor: Colors.indigo, textStyle: TextStyle(fontWeight: FontWeight.bold)),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: TextButton.styleFrom(
@@ -53,10 +52,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
           appBarTheme: AppBarTheme(
-              titleTextStyle: TextStyle(
-                  fontFamily: 'Opensans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold))),
+              titleTextStyle:
+                  TextStyle(fontFamily: 'Opensans', fontSize: 20, fontWeight: FontWeight.bold))),
       home: MyHomePage(),
     );
   }
@@ -99,8 +96,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     }).toList();
   }
 
-  void _addNewTransaction(
-      String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -158,10 +154,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       ),
       _showChart
           ? Container(
-              height: (mediaQuery.size.height -
-                      appBar.preferredSize.height -
-                      mediaQuery.padding.top) *
-                  0.75,
+              height:
+                  (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) *
+                      0.75,
               child: Chart(_recentTransactions),
             )
           : txListWidget
@@ -175,10 +170,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   ) {
     return [
       Container(
-        height: (mediaQuery.size.height -
-                appBar.preferredSize.height -
-                mediaQuery.padding.top) *
-            0.25,
+        height:
+            (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.25,
         child: Chart(_recentTransactions),
       ),
       txListWidget,
@@ -203,9 +196,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         : AppBar(
             title: Text(appBarText),
             actions: [
-              IconButton(
-                  onPressed: () => _startAddNewTransaction(context),
-                  icon: Icon(Icons.add))
+              IconButton(onPressed: () => _startAddNewTransaction(context), icon: Icon(Icons.add))
             ],
           );
   }
@@ -218,10 +209,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final dynamic appBar = _appBar(context);
 
     final txListWidget = Container(
-      height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-          0.75,
+      height:
+          (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.75,
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
 
@@ -231,8 +220,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandscape)
-              ..._buildLandscapeContent(mediaQuery, appBar, txListWidget),
+            if (isLandscape) ..._buildLandscapeContent(mediaQuery, appBar, txListWidget),
             if (!isLandscape)
               ..._buildPortraitContent(
                 mediaQuery,

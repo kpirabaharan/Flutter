@@ -66,13 +66,12 @@ class _TransactionItemState extends State<TransactionItem> {
             ? TextButton.icon(
                 icon: const Icon(Icons.delete),
                 label: const Text('Delete'),
-                style: TextButton.styleFrom(
-                    foregroundColor: Theme.of(context).errorColor),
+                style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error),
                 onPressed: () => widget.deleteTx(widget.transaction.id),
               )
             : IconButton(
                 icon: const Icon(Icons.delete),
-                color: Theme.of(context).errorColor,
+                color: Theme.of(context).colorScheme.error,
                 onPressed: () => widget.deleteTx(widget.transaction.id),
               ),
       ),
