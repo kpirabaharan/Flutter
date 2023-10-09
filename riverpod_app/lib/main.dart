@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_app/widgets/add_item.dart';
 import 'package:riverpod_app/widgets/item_list.dart';
 
 void main() {
@@ -16,8 +17,10 @@ class MyApp extends StatelessWidget {
           title: const Text('Riverpod App'),
         ),
         body: const Center(
-          child: ItemList(),
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [ItemList(), AddItem()],
+        )),
       ),
     );
   }

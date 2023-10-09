@@ -28,4 +28,16 @@ class Event {
       isFeatured: json['isFeatured'],
     );
   }
+
+  toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'location': location,
+      'date': date,
+      'image': image,
+      'isFeatured': isFeatured,
+    };
+  }
 }
